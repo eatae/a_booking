@@ -12,4 +12,12 @@ class Booking extends Model
     public $timestamps = false;
     protected $fillable = ['room_id', 'date_start', 'date_end'];
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }

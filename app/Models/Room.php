@@ -12,6 +12,11 @@ class Room extends Model
     const UPDATED_AT = null;
     protected $fillable = ['description', 'price'];
 
-
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

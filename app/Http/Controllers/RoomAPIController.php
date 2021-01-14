@@ -75,12 +75,13 @@ class RoomAPIController extends BaseController
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function actionDelete(Request $request)
     {
         /* validation */
         if (!$request->isMethod('DELETE')) {
-            return response()->json(['status'=>'error', 'messages' => ['The request method should be POST']]);
+            return response()->json(['status'=>'error', 'messages' => ['The request method should be DELETE']]);
         }
         $validator = Validator::make($request->all(), [
             'room_id' => ['required', 'exists:rooms,id']
@@ -89,9 +90,11 @@ class RoomAPIController extends BaseController
             return response()->json(['status'=>'error', 'messages' => $validator->errors()->all()]);
         }
         /* delete */
-        $room_id = $request->get('room_id');
-        Room::destroy($room_id);
+        $room_id = $request->input('room_id');
+        Room::find($room_id)->delete();
 
         return response()->json(['status' => 'success', 'response' => ['deleted_room_id' => $room_id]]);
     }
+
+
 }

@@ -38,4 +38,4 @@ Route::any('/booking/list', [BookingAPIController::class, 'actionList'])->name('
 /* create */
 Route::any('/booking/create', [BookingAPIController::class, 'actionCreate'])->name('booking-api-create');
 /* delete */
-Route::any('/booking/delete/{booking}', [BookingAPIController::class, 'actionDelete'])->name('booking-api-delete');
+Route::any('/booking/delete', [BookingAPIController::class, 'actionDelete'])->name('booking-api-delete');
