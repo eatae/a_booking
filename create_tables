@@ -1,0 +1,71 @@
+#!/usr/bin/env php
+<?php
+
+try {
+    $dbh = new PDO('mysql:host=a_booking-mysql:3306;dbname=a_booking', 'root', '1234', [PDO::ATTR_PERSISTENT => true]);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh->beginTransaction();
+    /*
+    * Drop if exists
+    */
+    $dbh->exec("DROP TABLE IF EXISTS bookings");
+    $dbh->exec("DROP TABLE IF EXISTS rooms");
+
+    /*
+     * Rooms
+     */
+    $dbh->exec('CREATE TABLE rooms (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            description VARCHAR(1000) NOT NULL,
+            price DECIMAL(6,2) NOT NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+            INDEX rooms_created_at_ind (created_at)
+        ) ENGINE=INNODB;'
+    );
+    /* Fill data rooms */
+    $dbh->exec("INSERT INTO rooms(id, description, price, created_at)
+            VALUES (1, 'Econom room', 100, NOW() + INTERVAL 3 HOUR),
+                (2, 'Standart room', 200, NOW() + INTERVAL 2 HOUR),
+                (3, 'Business room', 300, NOW() + INTERVAL 1 HOUR),
+                (4, 'Lux room', 400, NOW() + INTERVAL 5 HOUR),
+                (5, 'Delux room', 500, NOW() + INTERVAL 4 HOUR);"
+    );
+
+
+    /*
+     * Bookings
+     */
+    $dbh->exec('CREATE TABLE bookings (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                room_id INT NOT NULL,
+                date_start DATE NOT NULL,
+                date_end DATE NOT NULL,
+                INDEX bookings_room_ind (room_id),
+                INDEX bookings_date_start_ind (date_start),
+                FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE
+            ) ENGINE=INNODB;'
+    );
+    /* Fill data booking */
+    $dbh->exec("INSERT INTO bookings (room_id, date_start, date_end)
+            VALUES (1, '2021-01-10', '2021-01-11'),
+                   (1, '2021-01-13', '2021-01-14'),
+                   (2, '2021-01-13', '2021-01-15'),
+                   (2, '2021-01-16', '2021-01-22'),
+                   (2, '2021-01-09', '2021-01-10'),
+                   (3, '2021-01-13', '2021-01-15'),
+                   (3, '2021-01-16', '2021-01-22'),
+                   (3, '2021-01-09', '2021-01-10'),
+                   (4, '2021-01-16', '2021-01-22'),
+                   (4, '2021-01-09', '2021-01-10'),
+                   (5, '2021-01-16', '2021-01-22'),
+                   (5, '2021-01-09', '2021-01-10'),
+                   (5, '2021-01-16', '2021-01-22'),
+                   (5, '2021-01-09', '2021-01-10');"
+    );
+    $dbh->commit();
+    /* rm handler */
+    $dbh = null;
+} catch (Exception $e) {
+    $dbh->rollBack();
+    echo "Ошибка: " . $e->getMessage();
+}

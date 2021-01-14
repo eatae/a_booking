@@ -1,0 +1,16 @@
+Src:
+    https://webshake.ru/symfony-course/razvorachivaem-symfony-prilozhenie-v-docker
+
+Show:
+    localhost:8081
+
+Enter php-cli:
+    docker exec -it symfony-php-cli bash
+
+Docker-Compose up:
+    docker-compose up --build -d
+    docker-compose up -d
+
+MySQL connect for phpStorm:
+    localhost
+    33061
