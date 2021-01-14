@@ -18,7 +18,7 @@ Composer install:
 
 	cd ./docker
 
-В собираем и запускаем образы:
+Cобираем и запускаем образы:
 
 	docker-compose up --build -d
 
