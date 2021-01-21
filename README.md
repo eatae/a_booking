@@ -20,7 +20,7 @@ Create db_data:
 
 Check {GET} room list:
 
-	url -X GET 'http://localhost:8092/api/room/list'
+	curl -X GET 'http://localhost:8092/api/room/list'
 
 
 ### Docs
