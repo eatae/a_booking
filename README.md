@@ -6,37 +6,13 @@ Clone:
 
     git clone https://github.com/eatae/a_booking.git ./a_booking
 
-Переходим в директорию проекта:
+Init:
 
-	cd ./a_booking
+	bash ./a_booking/init.sh
 
-Composer install:
+{GET} room list:
 
-	php composer.phar install
-
-Переходим в директорию docker:
-
-	cd ./docker
-
-Cобираем и запускаем образы:
-
-	docker-compose up --build -d
-
-Заходим в контейнер:
-
-	docker exec -it a_booking-cli bash
-
-Запускаем скрипт для создания DB:
- 
-	php create_tables
-
-Выходим из контейнера:
-
-	exit
-
-Проверяем API:
-
-	curl -X GET 'http://localhost:8092/api/room/list'
+	url -X GET 'http://localhost:8092/api/room/list'
 
 
 ### Docs
