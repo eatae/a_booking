@@ -6,11 +6,15 @@ Clone:
 
     git clone https://github.com/eatae/a_booking.git ./a_booking
 
+Change directory:
+
+    cd ./a_booking
+
 Init:
 
-	bash ./a_booking/init.sh
+	init.sh
 
-{GET} room list:
+Check {GET} room list:
 
 	url -X GET 'http://localhost:8092/api/room/list'
 
