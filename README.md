@@ -12,7 +12,11 @@ Change directory:
 
 Init:
 
-	init.sh
+	bash init.sh
+	
+Create db_data:
+
+	docker exec a_booking-cli php create_tables
 
 Check {GET} room list:
 
