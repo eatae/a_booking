@@ -24,11 +24,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  * Room
  */
 /* list */
-Route::any('/room/list', [RoomAPIController::class, 'actionList'])->name('room-api-list');
+Route::get('/room', [RoomAPIController::class, 'actionList'])->name('room-api-list');
 /* create */
-Route::any('/room/create', [RoomAPIController::class, 'actionCreate'])->name('room-api-create');
+Route::post('/room', [RoomAPIController::class, 'actionCreate'])->name('room-api-create');
 /* delete */
-Route::any('/room/delete', [RoomAPIController::class, 'actionDelete'])->name('room-api-delete');
+Route::delete('/room/{id}', [RoomAPIController::class, 'actionDelete'])->name('room-api-delete');
+/* test */
+Route::any('/room/test', [RoomAPIController::class, 'actionTest'])->name('room-api-delete');
 
 /*
  * Booking

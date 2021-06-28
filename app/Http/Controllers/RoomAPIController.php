@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoomListRequest;
 use App\Models\Room;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -19,28 +22,14 @@ class RoomAPIController extends BaseController
     /**
      * List
      *
-     * @param Request $request
+     * @param RoomListRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function actionList(Request $request)
+    public function actionList(RoomListRequest $request)
     {
-        /* validation */
-        if (!$request->isMethod('GET')) {
-            return response()->json(['status'=>'error', 'messages' => ['The request method should be GET']]);
-        }
-        $validator = Validator::make($request->all(), [
-            'order' => ['nullable', 'string', 'in:price,created_at'],
-            'sort' => ['nullable', 'string', 'in:asc,desc']
-        ]);
-        if ( $validator->fails() ) {
-            return response()->json(['status'=>'error', 'messages' => $validator->errors()->all()]);
-        }
-        /* get rooms */
-        $order = $request->get('order') ?: 'created_at';
-        $sort = $request->get('sort') ?: 'asc';
-        $rooms = DB::table('rooms')->orderBy($order, $sort)->get();
+        $rooms = DB::table('rooms')->orderBy($request->getOrder(), $request->getSort())->get();
 
-        return response()->json(['status' => 'success', 'response' => $rooms]);
+        return response()->json(['data' => $rooms], Response::HTTP_OK);
     }
 
 
@@ -94,6 +83,24 @@ class RoomAPIController extends BaseController
         Room::find($room_id)->delete();
 
         return response()->json(['status' => 'success', 'response' => ['deleted_room_id' => $room_id]]);
+    }
+
+
+
+    public function actionTest()
+    {
+        $data = ['foo', 'bar', 'baz', 'zaz', 'uaz', 'kraz'];
+        $result = array_reduce($data, function($carry, $item){
+            return $carry . $item . PHP_EOL;
+        });
+        /* create */
+        $room = new Room([
+            'description' => $result,
+            'price' => 200
+        ]);
+        $room->save();
+
+        return response()->json(['status' => 'success', 'response' => ['room' => $room]]);
     }
 
 
