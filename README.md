@@ -18,12 +18,8 @@ Create db_data:
 
 	docker exec a_booking-cli php create_tables
 
-Check {GET} room list:
 
-	curl -X GET 'http://localhost:8092/api/room/list'
-
-
-### Docs
+### API documentation
 ***
 
 #### Entity Room:

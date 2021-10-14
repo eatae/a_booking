@@ -24,7 +24,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  * Room
  */
 /* list */
-Route::get('/room', [RoomAPIController::class, 'actionList'])->name('room-api-list');
+Route::get('/room/list', [RoomAPIController::class, 'actionList'])->name('room-api-list');
+/* one */
+Route::get('/room/{id}', [RoomAPIController::class, 'actionOne'])->name('room-api-one');
 /* create */
 Route::post('/room', [RoomAPIController::class, 'actionCreate'])->name('room-api-create');
 /* delete */

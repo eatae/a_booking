@@ -6,6 +6,7 @@ use App\Models\Room;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,9 @@ class BookingAPIController extends BaseController
      * List
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function actionList(Request $request)
+    public function actionList(Request $request): JsonResponse
     {
         /* validation */
         if (!$request->isMethod('GET')) {
@@ -54,7 +55,7 @@ class BookingAPIController extends BaseController
      * Create
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function actionCreate(Request $request)
     {
@@ -81,7 +82,7 @@ class BookingAPIController extends BaseController
      * Delete
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
     public function actionDelete(Request $request)
